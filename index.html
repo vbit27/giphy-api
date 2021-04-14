@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giphy-Api</title>
+  </head>
+  <body>
+    <input type="text" name="search" id="keyword" />
+    <button>Search</button>
+    <img src="#" />
+
+    <script>
+      const btn = document.querySelector('button');
+      const img = document.querySelector('img');
+
+      btn.addEventListener('click', addImage);
+
+      function addImage() {
+        const keyword = document.getElementById('keyword').value;
+
+        fetch(
+          `https://api.giphy.com/v1/gifs/translate?api_key=mdeqpiMQ8zJnsFFSzzM9SZWPAQXw6kqJ&s=${keyword}`,
+          { mode: 'cors' }
+        )
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (respnse) {
+            img.src = respnse.data.images.original.url;
+          })
+          .catch(
+            fetch(
+              `https://api.giphy.com/v1/gifs/translate?api_key=mdeqpiMQ8zJnsFFSzzM9SZWPAQXw6kqJ&s=error`,
+              { mode: 'cors' }
+            )
+              .then(function (response) {
+                return response.json();
+              })
+              .then(function (respnse) {
+                img.src = respnse.data.images.original.url;
+              })
+          );
+      }
+    </script>
+  </body>
+</html>
